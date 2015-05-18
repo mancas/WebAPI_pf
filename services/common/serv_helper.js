@@ -45,12 +45,7 @@
     var cloned = {};
     for (var key in obj) {
       if (typeof obj[key] === 'object') {
-        if (!recursive) {
-          cloned[key] = obj[key];
-          continue;
-        }
-
-        cloned[key] = cloneObject(obj[key]);
+        cloned[key] = recursive && cloneObject(obj[key]) || obj[key];
         continue;
       }
 
