@@ -95,16 +95,16 @@
   }
 
   function sendError(channel, request, error) {
-console.info(error);
-    /*var remotePortId = request.remotePortId;
+    var remotePortId = request.remotePortId;
     var reqId = request.remoteData.id;
+
     channel.postMessage({
       remotePortId: remotePortId,
       data: {
         id : reqId,
         error: window.ServiceHelper.cloneObject(error)
       }
-    });*/
+    });
   }
 
   var _operations = {
@@ -128,12 +128,7 @@ console.info(error);
       var fakeContact = opData[0];
       if (fakeContact.id === null || typeof fakeContact.id === 'undefined' ||
         fakeContact.id === 'undefined') {
-      _contacts.save(new mozContact(fakeContact)).then(result => {
-          channel.postMessage({
-            remotePortId: remotePortId,
-            data: { id : reqId, result: result }
-          });
-        }).catch(error => console.info(error));
+        saveContact(new mozContact(fakeContact));
       } else {
         var filter = {
           filterBy: ['id'],

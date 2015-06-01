@@ -1,10 +1,4 @@
 {
-  "settings": {"origin": "https://servsettings.github.io"},
-  "tcpsocket": {"origin": "https://servtcpsocket.github.io"},
-  "fm": {"origin": "https://servfm.github.io"},
-  "sms": {"origin": "https://servsms.github.io"},
-  "contacts": {"origin": "https://mancas.github.io"},
-  "device-storage": {"origin": "https://servdevstorage.github.io"},
-  "systemxhr": {"origin": "https://servsystemxhr.github.io"}
+  "contacts": {"origin": "https://mancas.github.io"}
 }
 

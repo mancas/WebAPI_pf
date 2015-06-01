@@ -124,7 +124,7 @@
         //testFind();
         testClear();
         testSave();
-        testGetRevision();
+        //testGetRevision();
       } catch (e) {
         log("Finished early with " + e);
       }
