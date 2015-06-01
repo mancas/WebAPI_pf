@@ -44,7 +44,7 @@
         remotePortId: remotePortId,
         data: { id : reqId, result: result }
       });
-    }).catch(sendError.bind(channel, request));
+    }).catch(sendError.bind(this, channel, request));
   }
 
   function setHandler(channel, request) {
@@ -122,7 +122,7 @@
             remotePortId: remotePortId,
             data: { id : reqId, result: result }
           });
-        }).catch(sendError.bind(channel, request));
+        }).catch(sendError.bind(this, channel, request));
       }
 
       var fakeContact = opData[0];
@@ -145,7 +145,7 @@
           // Need to update realContact fields
           var updatedContact = _updateContact(result[0], fakeContact);
           saveContact(updatedContact);
-        }).catch(sendError.bind(channel, request));
+        }).catch(sendError.bind(this, channel, request));
       }
     },
 
