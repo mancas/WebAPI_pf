@@ -116,28 +116,38 @@
       var opData = request.remoteData.data.params || [];
       var reqId = request.remoteData.id;
 
-      var fakeContact = opData[0];
-      var filter = {
-        filterBy: ['id'],
-        filterValue: fakeContact.id,
-        filterOp: 'equals'
-      };
-      var realContact;
-
-      _contacts.find(filter).then(result => {
-        if (!result.length) {
-          sendError(channel, request, {name: 'No contacts found'});
-          return;
-        }
-        // Need to update realContact fields
-        var updatedContact = _updateContact(result[0], fakeContact);
-        _contacts.save(updatedContact).then(result => {
+      function saveContact(contact) {
+        _contacts.save(contact).then(result => {
           channel.postMessage({
             remotePortId: remotePortId,
             data: { id : reqId, result: result }
           });
         }).catch(sendError.bind(channel, request));
-      }).catch(sendError.bind(channel, request));
+      }
+
+      var fakeContact = opData[0];
+      if (fakeContact.id === null || typeof fakeContact.id === 'undefined') {
+        var newContact = new mozContact();
+        var updatedContact = _updateContact(newContact, fakeContact);
+        saveContact(updatedContact);
+      } else {
+        var filter = {
+          filterBy: ['id'],
+          filterValue: fakeContact.id,
+          filterOp: 'equals'
+        };
+        var realContact;
+
+        _contacts.find(filter).then(result => {
+          if (!result.length) {
+            sendError(channel, request, {name: 'No contacts found'});
+            return;
+          }
+          // Need to update realContact fields
+          var updatedContact = _updateContact(result[0], fakeContact);
+          saveContact(updatedContact);
+        }).catch(sendError.bind(channel, request));
+      }
     },
 
     oncontactchange: setHandler.bind(this)

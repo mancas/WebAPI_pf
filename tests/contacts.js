@@ -87,13 +87,43 @@
         }
       }
 
+      function testSave() {
+        log('***** TESTING save');
+        var contact = new mozContact();
+        var request = _mozContacts.save(contact);
+        
+        request.onsuccess = function onsuccess() {
+          log('Successfuly save ' + JSON.stringify(this.result));
+        }
+
+        request.onerror = function onerror() {
+          var msg = 'save. Error: ' + this.error.name;
+          log(msg);
+        }
+      }
+
+      function testGetRevision() {
+        log('***** TESTING getRevision');
+        var request = _mozContacts.getRevision();
+        
+        request.onsuccess = function onsuccess() {
+          log('Successfuly getRevision ' + JSON.stringify(this.result));
+        }
+
+        request.onerror = function onerror() {
+          var msg = 'getRevision. Error: ' + this.error.name;
+          log(msg);
+        }
+      }
+
       try {
         log('Starting contacts polyfill tests');
         testGetCount();
         testGetAll();
         testFind();
         testClear();
-
+        testSave();
+        testGetRevision();
       } catch (e) {
         log("Finished early with " + e);
       }
