@@ -128,7 +128,6 @@ console.info(error);
       var fakeContact = opData[0];
       if (fakeContact.id === null || typeof fakeContact.id === 'undefined' ||
         fakeContact.id === 'undefined') {
-        saveContact();
       _contacts.save(new mozContact(fakeContact)).then(result => {
           channel.postMessage({
             remotePortId: remotePortId,
