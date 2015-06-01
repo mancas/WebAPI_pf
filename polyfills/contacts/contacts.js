@@ -111,7 +111,7 @@
       var toSave = typeof contact.toJSON  === 'function' ? contact.toJSON() :
         contact;
 
-      navConnHelper.methodCall({
+      return navConnHelper.methodCall({
         methodName: 'save',
         numParams: 1,
         returnValue: FakeDOMRequest
