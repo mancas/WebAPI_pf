@@ -119,10 +119,10 @@
 
       try {
         log('Starting contacts polyfill tests');
-        testGetCount();
-        testGetAll();
+        //testGetCount();
+        //testGetAll();
         //testFind();
-        testClear();
+        //testClear();
         testSave();
         //testGetRevision();
       } catch (e) {
