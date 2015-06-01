@@ -128,7 +128,7 @@
       var fakeContact = opData[0];
       if (fakeContact.id === null || typeof fakeContact.id === 'undefined' ||
         fakeContact.id === 'undefined') {
-        saveContact(fakeContact);
+        saveContact(new mozContact(fakeContact));
       } else {
         var filter = {
           filterBy: ['id'],
