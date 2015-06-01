@@ -14,6 +14,51 @@
       var _mozContacts = window.navigator.mozContacts ||
           abort('polyfill window.navigator.mozContacts not defined.');
 
+      function saveTestContact() {
+        return new Promise((resolve, reject) => {
+          var saveRequest = _mozContacts.save(new mozContact({
+            givenName: ['Test']
+          }));
+          
+          saveRequest.onsuccess = function onsuccess() {
+            log('Successfuly save ' + JSON.stringify(this.result));
+            resolve();
+          }
+
+          saveRequest.onerror = function onerror() {
+            var msg = 'save. Error: ' + this.error.name;
+            log(msg);
+            reject();
+          }
+        });
+      }
+
+      function findTestContact() {
+        var options = {
+          filterValue : "Test",
+          filterBy    : ["givenName","name","nickName"],
+          filterOp    : "contains",
+          filterLimit : 1,
+          sortBy      : "familyName",
+          sortOrder   : "ascending"
+        };
+
+        return new Promise((resolve, reject) => {
+          var request = _mozContacts.find(options);
+        
+          request.onsuccess = function onsuccess() {
+            log('Successfuly find ' + JSON.stringify(this.result));
+            resolve(this.result);
+          }
+
+          request.onerror = function onerror() {
+            var msg = 'find. Error: ' + this.error.name;
+            log(msg);
+            reject();
+          }
+        });
+      }
+
       function testGetCount() {
         log('***** TESTING getCount');
         var request = _mozContacts.getCount();
@@ -54,24 +99,9 @@
 
       function testFind() {
         log('***** TESTING find');
-        var options = {
-          filterValue : "Test",
-          filterBy    : ["givenName","name","nickName"],
-          filterOp    : "contains",
-          filterLimit : 1,
-          sortBy      : "familyName",
-          sortOrder   : "ascending"
-        };
-        var request = _mozContacts.find(options);
-        
-        request.onsuccess = function onsuccess() {
-          log('Successfuly find ' + JSON.stringify(this.result));
-        }
-
-        request.onerror = function onerror() {
-          var msg = 'find. Error: ' + this.error.name;
-          log(msg);
-        }
+        saveTestContact().then(() => {
+          findTestContact();
+        });
       }
 
       function testClear() {
@@ -90,17 +120,7 @@
 
       function testSave() {
         log('***** TESTING save');
-        var contact = new mozContact();
-        var request = _mozContacts.save(contact);
-        
-        request.onsuccess = function onsuccess() {
-          log('Successfuly save ' + JSON.stringify(this.result));
-        }
-
-        request.onerror = function onerror() {
-          var msg = 'save. Error: ' + this.error.name;
-          log(msg);
-        }
+        saveTestContact();
       }
 
       function testGetRevision() {
@@ -117,14 +137,34 @@
         }
       }
 
+      function testRemove() {
+        log('***** TESTING remove');
+        saveTestContact().then(() => {
+          findTestContact().then(result => {
+            var contact = result[0];
+            var request = _mozContacts.remove(contact);
+        
+            request.onsuccess = function onsuccess() {
+              log('Successfuly remove ' + JSON.stringify(this.result));
+            }
+
+            request.onerror = function onerror() {
+              var msg = 'remove. Error: ' + this.error.name;
+              log(msg);
+            }
+          });
+        });
+      }
+
       try {
         log('Starting contacts polyfill tests');
-        //testGetCount();
-        //testGetAll();
-        //testFind();
-        //testClear();
+        testGetCount();
+        testGetAll();
+        testFind();
+        testClear();
         testSave();
-        //testGetRevision();
+        testGetRevision();
+        testRemove();
       } catch (e) {
         log("Finished early with " + e);
       }
