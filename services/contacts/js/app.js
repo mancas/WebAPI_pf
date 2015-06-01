@@ -97,7 +97,7 @@
   function sendError(channel, request, error) {
     var remotePortId = request.remotePortId;
     var reqId = request.remoteData.id;
-
+console.info(error);
     channel.postMessage({
       remotePortId: remotePortId,
       data: {

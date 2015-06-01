@@ -121,7 +121,7 @@
         log('Starting contacts polyfill tests');
         testGetCount();
         testGetAll();
-        testFind();
+        //testFind();
         testClear();
         testSave();
         testGetRevision();
