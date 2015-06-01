@@ -74,6 +74,7 @@ this.
     // msg.source should have the endpoint to send and receive messages,
     // so we can do:
 
+    console.info('MANUUU' + isAllowed(msg.targetURL));
     msg.acceptConnection(isAllowed(msg.targetURL));
 
     var myTargetURL = msg.targetURL;
