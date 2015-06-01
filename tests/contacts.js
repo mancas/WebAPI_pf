@@ -36,11 +36,9 @@
       function findTestContact() {
         var options = {
           filterValue : "Test",
-          filterBy    : ["givenName","name","nickName"],
-          filterOp    : "contains",
-          filterLimit : 1,
-          sortBy      : "familyName",
-          sortOrder   : "ascending"
+          filterBy    : ["givenName"],
+          filterOp    : "equals",
+          filterLimit : 1
         };
 
         return new Promise((resolve, reject) => {
