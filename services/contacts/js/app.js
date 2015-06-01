@@ -126,7 +126,8 @@
       }
 
       var fakeContact = opData[0];
-      if (fakeContact.id === null || typeof fakeContact.id === 'undefined') {
+      if (fakeContact.id === null || typeof fakeContact.id === 'undefined' ||
+        fakeContact.id === 'undefined') {
         var newContact = new mozContact();
         var updatedContact = _updateContact(newContact, fakeContact);
         saveContact(updatedContact);
