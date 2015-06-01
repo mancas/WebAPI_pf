@@ -120,11 +120,11 @@
       try {
         log('Starting contacts polyfill tests');
         testGetCount();
-        //testGetAll();
-        //testFind();
-        //testClear();
-        //testSave();
-        //testGetRevision();
+        testGetAll();
+        testFind();
+        testClear();
+        testSave();
+        testGetRevision();
       } catch (e) {
         log("Finished early with " + e);
       }
