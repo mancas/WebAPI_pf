@@ -11,7 +11,8 @@
     runTest: function() {
       var log = window.Tests.log.bind(undefined, 'contacts');
       var abort = window.Tests.abort;
-      var _mozContacts = window.navigator.mozContacts;
+      var _mozContacts = window.navigator.mozContacts ||
+          abort('polyfill window.navigator.mozContacts not defined.');
 
       function testGetCount() {
         log('***** TESTING getCount');
@@ -119,11 +120,11 @@
       try {
         log('Starting contacts polyfill tests');
         testGetCount();
-        testGetAll();
-        testFind();
-        testClear();
-        testSave();
-        testGetRevision();
+        //testGetAll();
+        //testFind();
+        //testClear();
+        //testSave();
+        //testGetRevision();
       } catch (e) {
         log("Finished early with " + e);
       }
