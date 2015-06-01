@@ -96,7 +96,7 @@
 
   function sendError(channel, request, error) {
 console.info(error);
-    var remotePortId = request.remotePortId;
+    /*var remotePortId = request.remotePortId;
     var reqId = request.remoteData.id;
     channel.postMessage({
       remotePortId: remotePortId,
@@ -104,7 +104,7 @@ console.info(error);
         id : reqId,
         error: window.ServiceHelper.cloneObject(error)
       }
-    });
+    });*/
   }
 
   var _operations = {
