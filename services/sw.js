@@ -15,7 +15,7 @@ this.
   var resolveACL;
 
   function debug(str) {
-    console.log('Setting Service SW -*- -->' + str);
+    console.log('Service SW -*- -->' + str);
   }
 
   /**
