@@ -1,6 +1,6 @@
 // ADDED FOR POLYFILL: Import the polyfill script
 this.
-  importScripts('/WebAPI_pf/services/common/polyfill/navigator_connect_sw.js');
+  importScripts('navigator_connect_sw.js');
 // END ADDED FOR POLYFILL
 
 (function(sw) {
