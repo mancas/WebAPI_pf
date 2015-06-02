@@ -37,8 +37,7 @@
         var options = {
           filterValue : "Test",
           filterBy    : ["givenName"],
-          filterOp    : "equals",
-          filterLimit : 1
+          filterOp    : "equals"
         };
 
         return new Promise((resolve, reject) => {
