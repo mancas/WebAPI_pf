@@ -87,8 +87,12 @@
       function testSeek() {
         log('***** TESTING seek');
         return new Promise((resolve, reject) => {
-          seek('seekUp').then(seek.bind(undefined, 'seekDown')).then(
-            seek.bind(undefined, 'cancelSeek')).then(resolve);
+          seek('seekUp').then(seek.bind(undefined, 'seekDown')).then(() => {
+            seek('seekUp');
+            seek('cancelSeek').then(resolve).catch(error => {
+              reject(error);
+            });
+          });
         });
       }
 
