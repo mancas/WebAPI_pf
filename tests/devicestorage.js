@@ -20,7 +20,7 @@
         return window.navigator.getDeviceStorage(type);
       }
 
-      function getDeviceStorage(type) {
+      function getDeviceStorages(type) {
         return window.navigator.getDeviceStorages(type);
       }
 
