@@ -40,7 +40,6 @@
     var opData = request.remoteData.data.params || [];
 
     _contacts[operation](...opData).then(result => {
-      console.info(result);
       var opResult;
       if (operation === 'find') {
         opResult = [];
