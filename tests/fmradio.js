@@ -148,7 +148,7 @@
         testCancelSeek();
         testSetFrequency();
         testGetters();
-        testDisable();
+        //testDisable();
       } catch (e) {
         log("Finished early with " + e);
       }
