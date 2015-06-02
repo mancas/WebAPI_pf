@@ -73,6 +73,10 @@
   function isForbidden(aAcl, aTargetURL, aOperation, aForbidCall) {
     if (!aAcl || !aTargetURL || !aOperation || !aForbidCall ||
         (typeof aForbidCall !== 'function')) {
+      debug(!aAcl);
+      debug(!aTargetURL);
+      debug(!aOperation);
+      debug(!aForbidCall);
       return true;
     }
     var rules = getRules(aAcl, aTargetURL);
@@ -85,10 +89,12 @@
     //   }
     // }
     if (!rules) {
+      debug('no rules');
       return true;
     }
 
     if (Object.keys(rules).length === 0) {
+      debug('good');
       return false;
     }
     var constraints = rules[aOperation];
