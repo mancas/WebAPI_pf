@@ -31,44 +31,32 @@
        'frequencyLowerBound', 'channelWidth', 'frequency'];
       var frequencyTest = 87.5;
 
-      function saveTestContact() {
-        return new Promise((resolve, reject) => {
-          var saveRequest = _mozContacts.save(new mozContact({
-            givenName: ['Test']
-          }));
-          
-          saveRequest.onsuccess = function onsuccess() {
-            log('Successfuly save ' + JSON.stringify(this.result));
-            resolve();
-          }
+      var _resolve;
+      var _reject;
 
-          saveRequest.onerror = function onerror() {
-            var msg = 'save. Error: ' + this.error.name;
-            log(msg);
-            reject();
-          }
-        });
-      }
+      var enableRadio = new Promise((resolve, reject) => {
+        _resolve = resolve;
+        _reject = reject;
+      });
 
-      function enableRadio() {
-        return new Promise((resolve, reject) => {
-          var request = _mozFMRadio.enable(frequencyTest);
-        
-          request.onsuccess = function onsuccess() {
-            log('Successfuly enable ' + JSON.stringify(this.result));
-            resolve(this.result);
-          }
 
-          request.onerror = function onerror() {
-            log('enable. Error: ' + this.error.name);
-            reject();
-          }
-        });
+      function _enableRadio() {
+        var request = _mozFMRadio.enable(frequencyTest);
+      
+        request.onsuccess = function onsuccess() {
+          log('Successfuly enable ' + JSON.stringify(this.result));
+          _resolve(this.result);
+        }
+
+        request.onerror = function onerror() {
+          log('enable. Error: ' + this.error.name);
+          _reject();
+        }
       }
 
       function testEnable() {
         log('***** TESTING enable');
-        enableRadio();
+        _enableRadio();
       }
 
       function testDisable() {
@@ -86,7 +74,7 @@
 
       function testSeekUp() {
         log('***** TESTING seekUp');
-        enableRadio().then(() => {
+        enableRadio.then(() => {
           var request = _mozFMRadio.seekUp();
         
           request.onsuccess = function onsuccess() {
@@ -101,7 +89,7 @@
 
       function testSeekDown() {
         log('***** TESTING seekDown');
-        enableRadio().then(() => {
+        enableRadio.then(() => {
           var request = _mozFMRadio.seekDown();
         
           request.onsuccess = function onsuccess() {
@@ -116,7 +104,7 @@
 
       function testCancelSeek() {
         log('***** TESTING cancelSeek');
-        enableRadio().then(() => {
+        enableRadio.then(() => {
           var request = _mozFMRadio.cancelSeek();
         
           request.onsuccess = function onsuccess() {
@@ -131,7 +119,7 @@
 
       function testSetFrequency() {
         log('***** TESTING setFrequency');
-        enableRadio().then(() => {
+        enableRadio.then(() => {
           var request = _mozFMRadio.setFrequency(97.1);
         
           request.onsuccess = function onsuccess() {
@@ -146,7 +134,7 @@
 
       function testGetters() {
         properties.forEach(property => {
-          log('Get ' + property + ' Value: ' + mozFMRadio[property]);
+          log('Get ' + property + ' Value: ' + _mozFMRadio[property]);
         });
       }
 
@@ -155,12 +143,12 @@
         setHandlers(_mozFMRadio, log);
 
         testEnable();
-        testDisable();
         testSeekUp();
         testSeekDown();
         testCancelSeek();
         testSetFrequency();
         testGetters();
+        testDisable();
       } catch (e) {
         log("Finished early with " + e);
       }
