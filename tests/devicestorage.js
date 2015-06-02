@@ -32,15 +32,14 @@
           var request = sdcard.add(file);
 
           request.onsuccess = function () {
-            var name = this.result.name;
+            var name = this.result;
             log('Successfuly File "' + name +
               '" successfully wrote on the sdcard storage area');
             resolve(name);
           }
 
           request.onerror = function () {
-            var msg = 'addNamed. Error: ' + this.error;
-            log(msg);
+            log('addNamed. Error: ' + this.error);
             reject();
           }
         });
@@ -79,16 +78,13 @@
         var request = sdcard.add(file, fileTextName);
 
         request.onsuccess = function () {
-          var name = this.result.name;
+          var name = this.results;
           log('Successfuly File "' + name +
             '" successfully wrote on the sdcard storage area');
-          resolve(name);
         }
 
         request.onerror = function () {
-          var msg = 'addNamed. Error: ' + this.error;
-          log(msg);
-          reject();
+          log('addNamed. Error: ' + this.error);
         }
       }
 
@@ -104,8 +100,7 @@
         }
 
         request.onerror = function () {
-          var msg = 'available. Error: ' + this.error;
-          log(msg);
+          log('available. Error: ' + this.error);
         }
       }
 
@@ -120,8 +115,7 @@
         }
 
         request.onerror = function () {
-          var msg = 'delete. Error: ' + this.error;
-          log(msg);
+          log('delete. Error: ' + this.error);
         }
       }
 
@@ -134,14 +128,13 @@
         cursor.onsuccess = function onsuccess() {
           if (this.result) {
             var file = this.result;
-            console.log("Succesfully File updated: " + file.lastModifiedDate);
+            log("Succesfully File: " + file.name);
             this.continue();
           }
         }
 
         cursor.onerror = function onerror() {
-          var msg = 'enumerate. Error: ' + this.error;
-          log(msg);
+          log('enumerate. Error: ' + this.error);
         }
       }
 
@@ -154,14 +147,13 @@
         cursor.onsuccess = function onsuccess() {
           if (this.result) {
             var file = this.result;
-            console.log("Succesfully File updated: " + file.lastModifiedDate);
+            log("Succesfully File: " + file.name);
             this.continue();
           }
         }
 
         cursor.onerror = function onerror() {
-          var msg = 'enumerateEditable. Error: ' + this.error;
-          log(msg);
+          log('enumerateEditable. Error: ' + this.error);
         }
       }
 
@@ -176,8 +168,7 @@
         }
 
         request.onerror = function () {
-          var msg = 'freeSpace. Error: ' + this.error;
-          log(msg);
+          log('freeSpace. Error: ' + this.error);
         }
       }
 
@@ -226,8 +217,7 @@
         }
 
         request.onerror = function () {
-          var msg = 'usedSpace. Error: ' + this.error;
-          log(msg);
+          log('usedSpace. Error: ' + this.error);
         }
       }
 
