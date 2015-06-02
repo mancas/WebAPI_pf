@@ -91,7 +91,8 @@
       function testSeek() {
         log('***** TESTING seek');
         enableRadio.then(() => {
-          seek('seekUp').then(seek('seekDown').then(seek('cancelSeek')));
+          seek('seekUp').then(seek.bind(undefined, 'seekDown')).then(
+            seek.bind(undefined, 'cancelSeek'));
         });
       }
 
