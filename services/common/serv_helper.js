@@ -139,12 +139,11 @@
     }
     var cloned = {};
     for (var key in obj) {
-      console.info(Array.isArray(obj[key]));
+      console.info(key, obj[key]);
       if (Array.isArray(obj[key])) {
         cloned[key] = [];
         var dest = cloned[key];
         var source = obj[key];
-        console.info(dest, source);
         for (var i = 0, l = source.length; i < l; i++) {
           dest[i] = cloneObject(source[i], recursive);
         }

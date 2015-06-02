@@ -158,6 +158,7 @@
       var opData = request.remoteData.data.params || [];
 
       _contacts.find(...opData).then(result => {
+        console.info(result, Array.isArray(result));
         var contacts = window.ServiceHelper.cloneObject(result);
         channel.postMessage({
           remotePortId: remotePortId,
