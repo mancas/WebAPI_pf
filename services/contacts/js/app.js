@@ -40,6 +40,7 @@
     var opData = request.remoteData.data.params || [];
 
     _contacts[operation](...opData).then(result => {
+      console.info(result);
       channel.postMessage({
         remotePortId: remotePortId,
         data: { id : reqId, result: window.ServiceHelper.cloneObject(result) }
