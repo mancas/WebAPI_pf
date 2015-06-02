@@ -41,9 +41,18 @@
 
     _contacts[operation](...opData).then(result => {
       console.info(result);
+      var opResult;
+      if (operation === 'find') {
+        opResult = [];
+        result.forEach(elem => {
+          opResult.push(window.ServiceHelper.cloneObject(elem));
+        });
+      } else {
+        opResult = window.ServiceHelper.cloneObject(result);
+      }
       channel.postMessage({
         remotePortId: remotePortId,
-        data: { id : reqId, result: window.ServiceHelper.cloneObject(result) }
+        data: { id : reqId, result: opResult }
       });
     }).catch(sendError.bind(this, channel, request));
   }
@@ -158,8 +167,10 @@
       var opData = request.remoteData.data.params || [];
 
       _contacts.find(...opData).then(result => {
-        console.info(result, Array.isArray(result));
-        var contacts = window.ServiceHelper.cloneObject(result);
+        var contacts = [];
+        result.forEach(elem => {
+          contacts.push(window.ServiceHelper.cloneObject(elem));
+        });
         channel.postMessage({
           remotePortId: remotePortId,
           data: { id : reqId, result: contacts }

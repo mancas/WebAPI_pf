@@ -137,9 +137,9 @@
     if (typeof obj === 'string' || typeof obj === 'number' || obj === null) {
       return obj;
     }
+
     var cloned = {};
     for (var key in obj) {
-      console.info(key, obj[key]);
       if (Array.isArray(obj[key])) {
         cloned[key] = [];
         var dest = cloned[key];
