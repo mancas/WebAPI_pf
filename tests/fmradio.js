@@ -11,7 +11,6 @@
       'frequencyLowerBound', 'channelWidth', 'frequency'];
 
     properties.forEach(property => {
-      console.info(mozFMRadio['on' + property]);
       mozFMRadio['on' + property] = onChange.bind(undefined, log);
     });
   };
