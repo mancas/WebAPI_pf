@@ -150,10 +150,27 @@
       }
     },
 
-    oncontactchange: setHandler.bind(this)
+    oncontactchange: setHandler.bind(this),
+
+    find: function(channel, request) {
+      var remotePortId = request.remotePortId;
+      var reqId = request.remoteData.id;
+      var opData = request.remoteData.data.params || [];
+
+      _contacts[operation](...opData).then(result => {
+        var contacts = [];
+        result.forEach(elem => {
+          contacts.push(window.ServiceHelper.cloneObject(elem));
+        });
+        channel.postMessage({
+          remotePortId: remotePortId,
+          data: { id : reqId, result: contacts }
+        });
+      }).catch(sendError.bind(this, channel, request));
+    }
   };
 
-  ['clear', 'find', 'getCount', 'getRevision', 'remove'].forEach(method => {
+  ['clear', 'getCount', 'getRevision', 'remove'].forEach(method => {
     _operations[method] = buildDOMRequestAnswer.bind(undefined, method);
   });
 

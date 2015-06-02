@@ -134,7 +134,7 @@
 
   // Circular objects will cause this to hang
   var cloneObject = function(obj, recursive) {
-    if (typeof obj === 'string' || typeof obj === 'number') {
+    if (typeof obj === 'string' || typeof obj === 'number' || obj === null) {
       return obj;
     }
     var cloned = {};
