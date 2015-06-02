@@ -42,7 +42,7 @@
     _contacts[operation](...opData).then(result => {
       channel.postMessage({
         remotePortId: remotePortId,
-        data: { id : reqId, result: result }
+        data: { id : reqId, result: window.ServiceHelper.cloneObject(result) }
       });
     }).catch(sendError.bind(this, channel, request));
   }
