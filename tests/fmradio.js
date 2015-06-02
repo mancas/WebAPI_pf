@@ -54,6 +54,22 @@
         }
       }
 
+      function seek(operation) {
+        return new Promise((resolve, reject) => {
+          var request = _mozFMRadio[operation]();
+        
+          request.onsuccess = function onsuccess() {
+            log('Successfuly ' + operation + ' ' + JSON.stringify(this.result));
+            resolve();
+          }
+
+          request.onerror = function onerror() {
+            log(operation + '. Error: ' + this.error.name);
+            reject();
+          }
+        });
+      }
+
       function testEnable() {
         log('***** TESTING enable');
         _enableRadio();
@@ -72,48 +88,10 @@
         }
       }
 
-      function testSeekUp() {
-        log('***** TESTING seekUp');
+      function testSeek() {
+        log('***** TESTING seek');
         enableRadio.then(() => {
-          var request = _mozFMRadio.seekUp();
-        
-          request.onsuccess = function onsuccess() {
-            log('Successfuly seekUp ' + JSON.stringify(this.result));
-          }
-
-          request.onerror = function onerror() {
-            log('seekUp. Error: ' + this.error.name);
-          }
-        });
-      }
-
-      function testSeekDown() {
-        log('***** TESTING seekDown');
-        enableRadio.then(() => {
-          var request = _mozFMRadio.seekDown();
-        
-          request.onsuccess = function onsuccess() {
-            log('Successfuly seekDown ' + JSON.stringify(this.result));
-          }
-
-          request.onerror = function onerror() {
-            log('seekDown. Error: ' + this.error.name);
-          }
-        });
-      }
-
-      function testCancelSeek() {
-        log('***** TESTING cancelSeek');
-        enableRadio.then(() => {
-          var request = _mozFMRadio.cancelSeek();
-        
-          request.onsuccess = function onsuccess() {
-            log('Successfuly cancelSeek ' + JSON.stringify(this.result));
-          }
-
-          request.onerror = function onerror() {
-            log('cancelSeek. Error: ' + this.error.name);
-          }
+          seek('seekUp').then(seek('seekDown').then(seek('cancelSeek')));
         });
       }
 
