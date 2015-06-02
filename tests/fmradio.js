@@ -121,9 +121,7 @@
         setHandlers(_mozFMRadio, log);
 
         testEnable();
-        testSeekUp();
-        testSeekDown();
-        testCancelSeek();
+        testSeek();
         testSetFrequency();
         testGetters();
         //testDisable();
