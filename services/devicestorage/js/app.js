@@ -189,9 +189,10 @@
     var forbidCall = function(constraints) {
       return false;
     };
-
+ debug('processSWRequest');
     if (window.ServiceHelper.isForbidden(aAcl, targetURL, requestOp.operation,
                                         forbidCall)) {
+      debug('bad!');
       return;
     }
 
