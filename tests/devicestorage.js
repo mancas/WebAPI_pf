@@ -2,7 +2,7 @@
 (function(window) {
   window.Tests = window.Tests || {};
 
-  window.Tests['contacts'] = {
+  window.Tests['devicestorage'] = {
     dependencies: [
       '/WebAPI_pf/polyfills/common/webapi_poly_common.js',
       '/WebAPI_pf/polyfills/devicestorage/devicestorage.js'
