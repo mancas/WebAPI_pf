@@ -34,26 +34,6 @@
       var _resolve;
       var _reject;
 
-      var enableRadio = new Promise((resolve, reject) => {
-        _resolve = resolve;
-        _reject = reject;
-      });
-
-
-      function _enableRadio() {
-        var request = _mozFMRadio.enable(frequencyTest);
-      
-        request.onsuccess = function onsuccess() {
-          log('Successfuly enable ' + JSON.stringify(this.result));
-          _resolve(this.result);
-        }
-
-        request.onerror = function onerror() {
-          log('enable. Error: ' + this.error.name);
-          _reject();
-        }
-      }
-
       function seek(operation) {
         return new Promise((resolve, reject) => {
           var request = _mozFMRadio[operation]();
@@ -72,48 +52,69 @@
 
       function testEnable() {
         log('***** TESTING enable');
-        _enableRadio();
+        return new Promise((resolve, reject) => {
+          var request = _mozFMRadio.enable(frequencyTest);
+      
+          request.onsuccess = function onsuccess() {
+            log('Successfuly enable ' + JSON.stringify(this.result));
+            resolve(this.result);
+          }
+
+          request.onerror = function onerror() {
+            log('enable. Error: ' + this.error.name);
+            reject(this.error);
+          }
+        });
       }
 
       function testDisable() {
         log('***** TESTING disable');
-        var request = _mozFMRadio.disable();
-        
-        request.onsuccess = function onsuccess() {
-          log('Successfuly disable ' + JSON.stringify(this.result));
-        }
+        return new Promise((resolve, reject) => {
+          var request = _mozFMRadio.disable();
+          
+          request.onsuccess = function onsuccess() {
+            log('Successfuly disable ' + JSON.stringify(this.result));
+            resolve();
+          }
 
-        request.onerror = function onerror() {
-          log('disable. Error: ' + this.error.name);
-        }
+          request.onerror = function onerror() {
+            log('disable. Error: ' + this.error.name);
+            reject(this.error);
+          }
+        });
       }
 
       function testSeek() {
         log('***** TESTING seek');
-        enableRadio.then(() => {
+        return new Promise((resolve, reject) => {
           seek('seekUp').then(seek.bind(undefined, 'seekDown')).then(
-            seek.bind(undefined, 'cancelSeek'));
+            seek.bind(undefined, 'cancelSeek')).then(resolve);
         });
       }
 
       function testSetFrequency() {
         log('***** TESTING setFrequency');
-        enableRadio.then(() => {
+        return new Promise((resolve, reject) => {
           var request = _mozFMRadio.setFrequency(97.1);
-        
+
           request.onsuccess = function onsuccess() {
             log('Successfuly setFrequency ' + JSON.stringify(this.result));
+            resolve();
           }
 
           request.onerror = function onerror() {
             log('setFrequency. Error: ' + this.error.name);
+            reject(this.error);
           }
         });
       }
 
       function testGetters() {
-        properties.forEach(property => {
-          log('Get ' + property + ' Value: ' + _mozFMRadio[property]);
+        return new Promise((resolve, reject) => {
+          properties.forEach(property => {
+            log('Get ' + property + ' Value: ' + _mozFMRadio[property]);
+          });
+          resolve();
         });
       }
 
@@ -121,11 +122,10 @@
         log('Starting fmradio polyfill tests');
         setHandlers(_mozFMRadio, log);
 
-        testEnable();
-        testSeek();
-        testSetFrequency();
-        testGetters();
-        //testDisable();
+        testEnable().then(testSeek).then(testSetFrequency).
+          then(testGetters).then(testDisable).catch(error => {
+            log('Something went wrong ' + error);
+          });
       } catch (e) {
         log("Finished early with " + e);
       }
