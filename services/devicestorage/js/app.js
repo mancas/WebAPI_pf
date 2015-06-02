@@ -190,7 +190,7 @@
       return false;
     };
  debug('processSWRequest');
-    if (window.ServiceHelper.isForbidden(aAcl, targetURL, requestOp.operation,
+    if (window.ServiceHelper.isForbidden(aAcl, targetURL, requestOp,
                                         forbidCall)) {
       debug('bad!');
       return;
