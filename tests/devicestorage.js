@@ -5,7 +5,7 @@
   window.Tests['contacts'] = {
     dependencies: [
       '/WebAPI_pf/polyfills/common/webapi_poly_common.js',
-      '/WebAPI_pf/polyfills/device-storage/device_storage.js'
+      '/WebAPI_pf/polyfills/devicestorage/devicestorage.js'
     ],
 
     runTest: function() {
