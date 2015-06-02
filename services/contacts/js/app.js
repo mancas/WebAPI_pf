@@ -157,7 +157,7 @@
       var reqId = request.remoteData.id;
       var opData = request.remoteData.data.params || [];
 
-      _contacts[operation](...opData).then(result => {
+      _contacts.find(...opData).then(result => {
         var contacts = [];
         result.forEach(elem => {
           contacts.push(window.ServiceHelper.cloneObject(elem));
