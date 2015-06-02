@@ -7,11 +7,11 @@
   };
 
   function setHandlers(mozFMRadio, log) {
-    var properties = ['enabled', 'antennaAvailable', 'frequencyUpperBound',
-      'frequencyLowerBound', 'channelWidth', 'frequency'];
+    var onChangeEvents = ['onenabled', 'onfrequencychange', 'ondisabled',
+      'onantennaavailablechange'];
 
-    properties.forEach(property => {
-      mozFMRadio['on' + property] = onChange.bind(undefined, log);
+    onChangeEvents.forEach(eventType => {
+      mozFMRadio[eventType] = onChange.bind(undefined, log);
     });
   };
 

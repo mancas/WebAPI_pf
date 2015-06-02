@@ -202,7 +202,6 @@
     onChangeEvents.forEach(changeEvent => {
       Object.defineProperty(this, 'on' + changeEvent.eventType, {
         set: function(cb) {
-          console.info('on' + changeEvent.eventType);
           this._onchange(changeEvent.eventType, changeEvent.property, cb);
         }
       });
