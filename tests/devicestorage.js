@@ -60,7 +60,7 @@
         log('***** TESTING getDeviceStorages');
         var deviceStorages = getDeviceStorages('sdcard');
         if (deviceStorages && deviceStorages.length > 0) {
-          log('Successfuly getDeviceStorage ' + JSON.stringify(ds));
+          log('Successfuly getDeviceStorage ' + deviceStorages.length);
         } else {
           log('getDeviceStorages. Error');
         }
