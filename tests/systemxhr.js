@@ -61,7 +61,7 @@
           log('Throw onload');
           if (newXHR.status === 200) {
             if (newXHR.response)
-              log ('We got a response: ' + newXHR.response);
+              log ('We got a response: ' + typeof newXHR.response);
               if (Object.keys(newXHR.response).length > 0) {
                 log('And it has data');
               } else {
@@ -76,7 +76,7 @@
       try {
         log('Starting systemXHR polyfill tests');
         testXMLHttpRequest();
-        testXMLHttpRequestJSON();
+        //testXMLHttpRequestJSON();
       } catch (e) {
         log("Finished early with " + e);
       }
