@@ -76,7 +76,7 @@
       try {
         log('Starting systemXHR polyfill tests');
         testXMLHttpRequest();
-        //testXMLHttpRequestJSON();
+        testXMLHttpRequestJSON();
       } catch (e) {
         log("Finished early with " + e);
       }
