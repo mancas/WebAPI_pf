@@ -241,8 +241,8 @@
         case 'moz-chunked-text':
         case 'text':
         case '':
-          value = this._response;
         default:
+          value = this._response;
           break;
       }
       this._response = value;
