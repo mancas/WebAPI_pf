@@ -142,7 +142,23 @@
     // It should return true if resource access is forbidden,
     // false if it's allowed
     var forbidCall = function(constraints) {
-      return false;
+      var forbidden = false;
+      switch(operation) {
+        case 'open':
+          var params = request.remoteData.data.params;
+          var specialFields = {
+            binaryType: (realValue, expectedValue) => {
+              var regExp = new RegExp(expectedValue);
+              return !regExp.test(realValue.constructor.name);
+            }
+          };
+          forbidden = window.ServiceHelper.checkParams(params,
+                                                      constraints.params,
+                                                      specialFields);
+          break;
+      }
+
+      return forbidden;
     };
 
     if (window.ServiceHelper.isForbidden(aAcl, targetURL, operation,

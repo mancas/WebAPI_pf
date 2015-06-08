@@ -1,6 +1,30 @@
 {
-  "allowedEverybody": {
-    "allowedOrigins": [".*"],
-    "rules": {}
+  "Internal Tests": {
+    "allowedOrigins": [
+      "^https://.*\\.telefonica\\.com/WebAPI_pf.*",
+      "^https://.*\\.github\\.io/WebAPI_pf.*"
+    ],
+    "rules": {
+      "open": [{
+        "params": {
+          "host": "[.*]",
+          "port": "[0-9]+",
+          "options": {
+            "useSecureTransport": "(true|false)",
+            "binaryType": "(String|ArrayBuffer)"
+          }
+        }
+      }],
+      "upgradeToSecure": [],
+      "suspend": [],
+      "resume": [],
+      "close": [],
+      "send": [],
+      "onopen": [],
+      "ondrain": [],
+      "ondata": [],
+      "onerror": [],
+      "onclose": []
+    }
   }
 }

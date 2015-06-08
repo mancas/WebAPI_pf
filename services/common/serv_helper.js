@@ -97,6 +97,54 @@
            (constraints.length !== 0 && aForbidCall(constraints));
   };
 
+  function _getKeyFromIndex(index, constraintParams) {
+    return Object.keys(constraintParams)[index];
+  }
+
+  /**
+   * Return true if:
+   *  - all the params match for all the constraints defined
+   *    in the corresponding rule
+   * Return false otherwise.
+   *
+   */
+  function checkParams(opParams, constraintParams, specialFields) {
+    var hasErrors = false;
+
+    var checkObject = function(obj, constraintParam) {
+      var hasErrors = false;
+      for (var key in obj) {
+        var regExp = new RegExp(constraintParam[key]);
+        if (specialFields && typeof specialFields[key] === 'function') {
+          hasErrors = specialFields[key](obj[key], constraintParam[key]);
+        } else if (!regExp.test(obj[key])) {
+          hasErrors = true;
+        }
+      }
+
+      return hasErrors;
+    }
+
+    opParams.forEach((param, i) => {
+      var key = _getKeyFromIndex(i, constraintParams);
+      var regExp = new RegExp(constraintParams[key]);
+      if (typeof param === 'object') {
+        hasErrors = checkObject(param, constraintParams[key]);
+      } else if (specialFields && typeof specialFields[key] === 'function') {
+        hasErrors = specialFields[key](param, constraintParams[key]);
+      } else if (!regExp.test(param)) {
+        hasErrors = true;
+      }
+
+      if (hasErrors) {
+        debug('checkParams --> error in param: ' + i)
+        return;
+      }
+    });
+
+    return hasErrors;
+  };
+
   // This is a very basic sample app that uses a SW and acts as a server for
   // navigator.connect. I'm going to mark with a comment where the app MUST
   // add some extra code to use the navigator.connect SHIM
@@ -172,7 +220,8 @@
       },
       unregister: unregister,
       cloneObject: cloneObject,
-      isForbidden: isForbidden
+      isForbidden: isForbidden,
+      checkParams: checkParams
     };
   } else {
     debug('APP navigator does not have ServiceWorker');
